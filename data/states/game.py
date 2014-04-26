@@ -40,7 +40,14 @@ class Game(tools.States):
         self.hud_bg_orig = tools.Image.load('hud.png')
         self.hud_bg = pg.transform.scale(self.hud_bg_orig, (self.screen_rect.width, self.screen_rect.height))
         self.hud_bg_rect = self.hud_bg.get_rect(center=self.screen_rect.center)
-    
+        
+        self.cursor = tools.Image.load('hand.png')
+
+    def render_cursor(self, screen):
+        mouseX, mouseY = pg.mouse.get_pos()
+        self.cursor_rect = self.cursor.get_rect(center=(mouseX+10, mouseY+13))
+        screen.blit(self.cursor, self.cursor_rect)
+        
     def get_event(self, event, keys):
         if event.type == pg.QUIT:
             self.quit = True
@@ -73,10 +80,13 @@ class Game(tools.States):
         if self.help_overlay:
             screen.blit(self.overlay_bg,(0,0))
             screen.blit(self.help_overlay_title, self.help_overlay_title_rect)
+        self.render_cursor(screen)
             
     def cleanup(self):
+        pg.mouse.set_visible(True)
         pg.mixer.music.stop()
         
     def entry(self):
+        pg.mouse.set_visible(False)
         self.bg_music.load_files(self.bg_music_files)
         pg.mixer.music.play()

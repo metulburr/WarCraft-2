@@ -49,7 +49,6 @@ class Menu(tools.States):
         self.mouse_menu_click(event)
 
     def update(self, now, keys):
-        pg.mouse.set_visible(True)
         self.mouse_hover_sound()
         self.change_selected_option()
 
