@@ -142,6 +142,8 @@ class Music:
         self.volume = volume
         self.song = song
         self.track_end = pg.USEREVENT+1
+        self.tracks = []
+        self.track = 0
 
         
     def setup(self, volume):
@@ -156,9 +158,6 @@ class Music:
         pg.mixer.music.load(self.tracks[0])
         
     def load_files(self, file_list):
-        self.track_end = pg.USEREVENT+1
-        self.tracks = []
-        self.track = 0
         for track in file_list:
             self.tracks.append(os.path.join(self.path, track))
         #for track in os.listdir(self.path):

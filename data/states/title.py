@@ -52,8 +52,9 @@ class Title(tools.States):
             self.done = True
             
     def cleanup(self):
-        pass
+        pg.mouse.set_visible(True)
         
     def entry(self):
+        pg.mouse.set_visible(False)
         self.intro.load()
         pg.mixer.music.play()
