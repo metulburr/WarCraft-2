@@ -17,8 +17,12 @@ class Title(tools.States):
 
         self.image_orig = tools.Image.load('title_bg.png')
         self.image = pg.transform.scale(self.image_orig, (self.screen_rect.width, self.screen_rect.height))
-        text = []
-        self.rendered_text = self.make_text_list("Fixedsys500c",50,text,(0,0,0),320,50)
+        text = ['Press Any Key']
+        self.rendered_text = self.make_text_list("Fixedsys500c",25,text,(255,255,255),400,50)
+        
+        self.blink = False
+        self.blink_time = 1.0
+        self.blink_timer = 0
 
     def make_text_list(self,font,size,strings,color,start_y,y_space):
         rendered_text = []
@@ -38,12 +42,16 @@ class Title(tools.States):
         self.cover_alpha = max(self.cover_alpha-self.alpha_step,0)
         if self.current_time-self.start_time > 1000.0*self.timeout:
             self.done = True
+        elif self.current_time-self.blink_timer > 1000/self.blink_time:
+            self.blink = not self.blink
+            self.blink_timer = self.current_time
             
     def render(self, screen):
         screen.blit(self.image, (0,0))
         screen.blit(self.cover,(0,0))
-        for msg in self.rendered_text:
-            screen.blit(*msg)
+        if self.blink:
+            for msg in self.rendered_text:
+                screen.blit(*msg)
 
     def get_event(self,event, keys):
         if event.type == pg.QUIT:
@@ -56,5 +64,5 @@ class Title(tools.States):
         
     def entry(self):
         pg.mouse.set_visible(False)
-        self.intro.load()
+        self.intro.load_single()
         pg.mixer.music.play()

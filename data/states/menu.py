@@ -20,15 +20,6 @@ class Menu(tools.States):
         self.bg_rect = self.bg.get_rect(center=self.screen_rect.center)
         self.cursor = tools.Image.load('mouse_pointer.png')
         #self.cursor_rect = self.cursor.get_rect(center=pg.mouse.get_pos())
-        
-        btn_config = {
-            'font':tools.Font.load('impact.ttf', 25),
-            'hover_color':(100,0,0),
-            'font_color':(205,195,0),
-            'hover_font_color':(255,255,255),
-        }
-        self.play_btn = button.Button((0,0,200,50), (100,0,0), None, text='Play', **btn_config)
-        self.exit_btn = button.Button((100,100,200,50), (100,0,0), None, text='Quit', **btn_config)
 
     def render_cursor(self, screen):
         mouseX, mouseY = pg.mouse.get_pos()
@@ -61,28 +52,23 @@ class Menu(tools.States):
         screen.blit(self.bg, self.bg_rect)
         for i,opt in enumerate(self.rendered["des"]):
             opt[1].center = (self.screen_rect.centerx, self.from_bottom+i*self.spacer)
-            #self.red_bg_rect.center = opt[i].center
             if i == self.selected_index:
                 rend_img,rend_rect = self.rendered["sel"][i]
                 rend_rect.center = opt[1].center
                 screen.blit(rend_img,rend_rect)
             else:
                 screen.blit(opt[0],opt[1])
-        
-        #self.play_btn.render(screen)
-        #self.exit_btn.render(screen)
         self.render_cursor(screen)
         
     def cleanup(self):
         pg.mouse.set_visible(True)
         self.intro_started = False
         pg.mixer.music.stop()
-        #self.background_music.setup(self.background_music_volume)
         
     def entry(self):
         pg.mouse.set_visible(False)
         if not self.intro_started:
-            self.intro.load()
+            self.intro.load_single()
             pg.mixer.music.play()
             self.intro_started = True
 
