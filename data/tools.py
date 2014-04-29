@@ -69,8 +69,8 @@ class States:
         self.last_option = None
         self.gametitle = 'Boom'
         
-        self.menu_option_deselect = (50,50,50)
-        self.menu_option_select = (255,255,255)
+        self.menu_option_deselect_color = (105,95,0)
+        self.menu_option_select_color = (255,255,255)
         self.title_color = (50,50,50)
         self.text_basic_color = (255,255,255)
         self.text_hover_color = (100,100,100)
@@ -118,17 +118,22 @@ class States:
         return text,rect
         
     def pre_render_options(self):
-        font_deselect = Font.load('impact.ttf', 25)
-        font_selected = Font.load('impact.ttf', 40)
+        font_deselect = Font.load('warcraft.ttf', 20)
+        font_selected = Font.load('warcraft.ttf', 20)
 
-        rendered_msg = {"des":[],"sel":[]}
+        rendered_msg = {"des":[],"sel":[], 'bg':[]}
         for option in self.options:
-            d_rend = font_deselect.render(option, 1, self.menu_option_deselect)
+            bg = pg.Surface([250,35]).convert()
+            bg.fill((50,0,0))
+            bg_rect = bg.get_rect()
+            
+            d_rend = font_deselect.render(option, 1, self.menu_option_deselect_color)
             d_rect = d_rend.get_rect()
-            s_rend = font_selected.render(option, 1, self.menu_option_select)
+            s_rend = font_selected.render(option, 1, self.menu_option_select_color)
             s_rect = s_rend.get_rect()
             rendered_msg["des"].append((d_rend,d_rect))
             rendered_msg["sel"].append((s_rend,s_rect))
+            rendered_msg["bg"].append((bg, bg_rect))
         self.rendered = rendered_msg
         
     def select_option(self, i):

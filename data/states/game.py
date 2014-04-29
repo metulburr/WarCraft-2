@@ -54,7 +54,7 @@ class Game(tools.States):
             self.quit = True
         elif event.type == pg.KEYDOWN:
             if event.key == self.keybinding['back']:
-                self.button_sound.sound.play()
+                self.button_click.sound.play()
                 self.done = True
                 self.next = 'MENU'
                 

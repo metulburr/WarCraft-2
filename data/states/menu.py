@@ -12,8 +12,8 @@ class Menu(tools.States):
         self.options = ['Play', 'Quit']
         self.next_list = ['GAME']
         self.pre_render_options()
-        self.from_bottom = 200
-        self.spacer = 75
+        self.from_bottom = 300
+        self.spacer = 40
 
         self.bg_orig = tools.Image.load('menu_bg.png')
         self.bg = pg.transform.scale(self.bg_orig, (self.screen_rect.width, self.screen_rect.height))
@@ -46,18 +46,31 @@ class Menu(tools.States):
     def update(self, now, keys):
         self.mouse_hover_sound()
         self.change_selected_option()
+        
+    def warcraft_font_adjust(self, rect):
+        #warcraft font too high
+        buff = 3
+        rect.y += buff
+        return rect
 
     def render(self, screen):
         screen.fill((0,0,0))
         screen.blit(self.bg, self.bg_rect)
         for i,opt in enumerate(self.rendered["des"]):
-            opt[1].center = (self.screen_rect.centerx, self.from_bottom+i*self.spacer)
+            aligned_center = (self.screen_rect.centerx, self.from_bottom+i*self.spacer)
+            opt[1].center =  aligned_center
+            bg_image, bg_rect = self.rendered["bg"][i]
+            bg_rect.center = aligned_center
+            screen.blit(bg_image, bg_rect)
             if i == self.selected_index:
                 rend_img,rend_rect = self.rendered["sel"][i]
                 rend_rect.center = opt[1].center
+                self.warcraft_font_adjust(rend_rect)
                 screen.blit(rend_img,rend_rect)
             else:
-                screen.blit(opt[0],opt[1])
+                rect = opt[1]
+                self.warcraft_font_adjust(rect)
+                screen.blit(opt[0],rect)
         self.render_cursor(screen)
         
     def cleanup(self):
