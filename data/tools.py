@@ -160,6 +160,13 @@ class States:
             elif self.selected_index > max_ind:
                 self.selected_index = 0
             self.button_hover.sound.play()
+            
+    def warcraft_font_adjust(self, rect):
+        #warcraft font too high
+        buff = 3
+        rect.y += buff
+        return rect
+
 
 
 

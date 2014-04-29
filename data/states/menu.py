@@ -46,12 +46,6 @@ class Menu(tools.States):
     def update(self, now, keys):
         self.mouse_hover_sound()
         self.change_selected_option()
-        
-    def warcraft_font_adjust(self, rect):
-        #warcraft font too high
-        buff = 3
-        rect.y += buff
-        return rect
 
     def render(self, screen):
         screen.fill((0,0,0))

@@ -16,16 +16,18 @@ class Button(object):
 
     def process_kwargs(self,kwargs):
         """Various optional customization you can change by passing kwargs."""
-        settings = {"text" : None,
-                    "font" : pg.font.Font(None,16),
-                    "call_on_release" : True,
-                    "hover_color" : None,
-                    "clicked_color" : None,
-                    "font_color" : pg.Color("white"),
-                    "hover_font_color" : None,
-                    "clicked_font_color" : None,
-                    "click_sound" : None,
-                    "hover_sound" : None}
+        settings = {
+            "text"              : None,
+            "font"              : pg.font.Font(None,16),
+            "call_on_release"   : True,
+            "hover_color"       : None,
+            "clicked_color"     : None,
+            "font_color"        : pg.Color("white"),
+            "hover_font_color"  : None,
+            "clicked_font_color": None,
+            "click_sound"       : None,
+            "hover_sound"       : None,
+        }
         for kwarg in kwargs:
             if kwarg in settings:
                 settings[kwarg] = kwargs[kwarg]
