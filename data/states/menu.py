@@ -2,7 +2,7 @@
 
 import pygame as pg
 from .. import tools
-from ..GUI import button
+from ..GUI import button, roundrects
 import random
 
 class Menu(tools.States):
@@ -13,13 +13,16 @@ class Menu(tools.States):
         self.next_list = ['GAME']
         self.pre_render_options()
         self.from_bottom = 300
-        self.spacer = 40
+        self.spacer = 35
 
         self.bg_orig = tools.Image.load('menu_bg.png')
         self.bg = pg.transform.scale(self.bg_orig, (self.screen_rect.width, self.screen_rect.height))
         self.bg_rect = self.bg.get_rect(center=self.screen_rect.center)
         self.cursor = tools.Image.load('mouse_pointer.png')
         #self.cursor_rect = self.cursor.get_rect(center=pg.mouse.get_pos())
+        
+        self.menu_item_bg_w = 200
+        self.menu_item_bg_h = 25
 
     def render_cursor(self, screen):
         mouseX, mouseY = pg.mouse.get_pos()
@@ -52,10 +55,12 @@ class Menu(tools.States):
         screen.blit(self.bg, self.bg_rect)
         for i,opt in enumerate(self.rendered["des"]):
             aligned_center = (self.screen_rect.centerx, self.from_bottom+i*self.spacer)
+            
+            for option in self.options:
+                w = self.menu_item_bg_w
+                h = self.menu_item_bg_h
+                roundrects.round_rect(screen, (aligned_center[0]-(w//2), aligned_center[1]-(h//2),w,h), (0,0,0), 5, 1, (50,0,0))
             opt[1].center =  aligned_center
-            bg_image, bg_rect = self.rendered["bg"][i]
-            bg_rect.center = aligned_center
-            screen.blit(bg_image, bg_rect)
             if i == self.selected_index:
                 rend_img,rend_rect = self.rendered["sel"][i]
                 rend_rect.center = opt[1].center
@@ -65,6 +70,7 @@ class Menu(tools.States):
                 rect = opt[1]
                 self.warcraft_font_adjust(rect)
                 screen.blit(opt[0],rect)
+        
         self.render_cursor(screen)
         
     def cleanup(self):

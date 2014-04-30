@@ -123,17 +123,12 @@ class States:
 
         rendered_msg = {"des":[],"sel":[], 'bg':[]}
         for option in self.options:
-            bg = pg.Surface([250,35]).convert()
-            bg.fill((50,0,0))
-            bg_rect = bg.get_rect()
-            
             d_rend = font_deselect.render(option, 1, self.menu_option_deselect_color)
             d_rect = d_rend.get_rect()
             s_rend = font_selected.render(option, 1, self.menu_option_select_color)
             s_rect = s_rend.get_rect()
             rendered_msg["des"].append((d_rend,d_rect))
             rendered_msg["sel"].append((s_rend,s_rect))
-            rendered_msg["bg"].append((bg, bg_rect))
         self.rendered = rendered_msg
         
     def select_option(self, i):
