@@ -2,7 +2,7 @@
 
 import pygame as pg
 from .. import tools
-from ..GUI import button, roundrects
+from ..toolbox import button, roundrects
 import random
 
 class Menu(tools.States):

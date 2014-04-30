@@ -2,7 +2,7 @@
 
 import pygame as pg
 from .. import tools
-from ..GUI import button
+from ..toolbox import button
 import os
 import random
 
